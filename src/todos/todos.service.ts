@@ -16,8 +16,12 @@ export class TodosServices {
     return await this.todoRepository.save(todo);
   }
 
-  findMany() {
-    this.todoRepository.find();
+  findTodo(id: number) {
+    return this.todoRepository.findOne({ where: { id } });
+  }
+
+  findAllTodos() {
+    return this.todoRepository.find();
   }
 
   async update(id: number, dto: CreateTodoDto) {

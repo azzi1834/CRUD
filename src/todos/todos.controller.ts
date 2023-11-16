@@ -19,9 +19,19 @@ export class TodosController {
     return this.todoServices.create(dto);
   }
 
+  @Get(':id')
+  findTodo(@Param('id') id: number) {
+    const todos = this.todoServices.findTodo(id);
+    console.log(todos);
+
+    return todos;
+  }
+
   @Get()
-  findMany() {
-    return this.todoServices.findMany();
+  findAllTodos() {
+    const todos = this.todoServices.findAllTodos();
+
+    return todos;
   }
 
   @Put(':id')
