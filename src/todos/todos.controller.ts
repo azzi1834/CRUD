@@ -18,14 +18,17 @@ export class TodosController {
   constructor(private readonly todoServices: TodosServices) {}
 
   @Post()
-  create(@Body() dto: CreateTodoDto) {
-    return this.todoServices.create(dto);
+  async create(@Body() dto: CreateTodoDto) {
+    const data = await this.todoServices.create(dto);
+
+    return data;
   }
 
   @Get()
   async findAllTodos(@Res() response) {
     try {
       const TodosData = await this.todoServices.findAllTodos();
+
       return response.status(HttpStatus.OK).json({
         message: 'All Todos data found successfully',
         TodosData,

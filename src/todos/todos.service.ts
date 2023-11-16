@@ -9,7 +9,17 @@ import { UpdateTodoDto } from './dto/updateTodo.dto';
 export class TodosServices {
   constructor(@InjectModel(Todo.name) private TodoModel: Model<Todo>) {}
 
-  async create(dto: CreateTodoDto): Promise<Todo> {
+  async create(dto: CreateTodoDto) {
+    debugger;
+
+    const alreadyExists = await this.TodoModel.findOne({
+      where: { title: dto.title },
+    });
+
+    if (alreadyExists) {
+      throw new NotFoundException('Todo already exist');
+    }
+
     const createdTodo = new this.TodoModel(dto);
 
     return createdTodo.save();
