@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Sequelize } from 'sequelize-typescript';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Injectable()
 export class AppService {
-  constructor(private sequelize: Sequelize) {}
+  constructor(private mongoose: MongooseModule) {}
   getHello(): string {
     return 'Hello World!';
   }
