@@ -1,13 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { SEQUELIZE } from 'src/constants';
 
-/**
- * SEQUELIZE variable is stored in a file named
- * 'constants' so it can be easily reused anywhere
- * without being subject to human error.
- */
-import { User } from 'src/user/user.entity';
-
 export const databaseProviders = [
   {
     provide: SEQUELIZE,
@@ -36,7 +29,6 @@ export const databaseProviders = [
         .catch((err) => {
           console.error('Unable to connect to the database:', err);
         });
-      sequelize.addModels([User]);
 
       await sequelize.sync();
       return sequelize;

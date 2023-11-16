@@ -1,49 +1,34 @@
-import {
-  Column,
-  Model,
-  DataType,
-  CreatedAt,
-  UpdatedAt,
-  DeletedAt,
-} from 'sequelize-typescript';
-// import { IDefineOptions } from 'sequelize-typescript/lib/interfaces/IDefineOptions';
+import { Column, CreatedAt, DataType, UpdatedAt } from 'sequelize-typescript';
 
-// const tableOptions: IDefineOptions = {
-//   tableName: 'users',
-// } as IDefineOptions;
+import { Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-// @Table(tableOptions)
-export class User extends Model<User> {
-  @Column({
-    type: DataType.BIGINT,
-    allowNull: false,
-    autoIncrement: true,
-    unique: true,
-    primaryKey: true,
-  })
+@Entity({ name: 'User' })
+export class User {
+  @PrimaryGeneratedColumn()
   public id: number;
 
   @Column({
     allowNull: false,
+    type: DataType.STRING,
   })
   name: string;
 
-  @Column({
-    allowNull: false,
-  })
+  @Column({})
   age: number;
 
   @Column({
     allowNull: false,
-    validate: {
-      isEmail: true,
-    },
+    type: DataType.STRING,
   })
   email: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  password: string;
 
   @CreatedAt public createdAt: Date;
 
   @UpdatedAt public updatedAt: Date;
-
-  @DeletedAt public deletedAt: Date;
 }
