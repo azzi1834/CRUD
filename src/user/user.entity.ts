@@ -1,34 +1,35 @@
-import { Column, CreatedAt, DataType, UpdatedAt } from 'sequelize-typescript';
+// import { Column, CreatedAt, DataType, UpdatedAt } from 'sequelize-typescript';
 
-import { Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'User' })
 export class User {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({
-    allowNull: false,
-    type: DataType.STRING,
-  })
+  @Column({ nullable: true, type: 'varchar' })
   name: string;
 
-  @Column({})
+  @Column({ nullable: true, type: 'int' })
   age: number;
 
-  @Column({
-    allowNull: false,
-    type: DataType.STRING,
-  })
+  @Column({})
   email: string;
 
   @Column({
-    type: DataType.STRING,
-    allowNull: false,
+    nullable: true,
+    type: 'varchar',
   })
   password: string;
 
-  @CreatedAt public createdAt: Date;
-
-  @UpdatedAt public updatedAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
