@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "abc12345",
+    "database": "crud",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "abc12345",
+    "database": "crud",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "abc12345",
+    "database": "crud",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}

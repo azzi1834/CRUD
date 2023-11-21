@@ -33,8 +33,16 @@ export class TodosServices {
   }
 
   async delete(id: number) {
+    debugger;
+
     const todo = await this.todoRepository.findOne({ where: { id } });
 
-    return await this.todoRepository.remove(todo);
+    if (todo === null) {
+      return { message: 'Todo not found' };
+    } else {
+      const deletedTodo = await this.todoRepository.remove(todo);
+
+      return { message: 'Todo deleted', deletedTodo: deletedTodo };
+    }
   }
 }

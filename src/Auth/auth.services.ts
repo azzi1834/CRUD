@@ -11,13 +11,15 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string) {
+    debugger;
+
     const user = await this.userService.findUser({ email: email });
 
     if (
       user &&
       bcrypt.compare(user.password, await bcrypt.hash(password, 10))
     ) {
-      const { password, ...result } = user;
+      const { ...result } = user;
       return result;
     }
     return null;
@@ -38,20 +40,15 @@ export class AuthService {
     };
   }
 
-  async register(data) {
-    debugger;
-    console.log('data->body', data.body);
-
+  async register(data: any) {
     data.body.password = await bcrypt.hash(data.body.password, 10);
-    console.log(data.body.password);
+
     const response = await this.userService.createUser(data);
 
     if (response) {
       //don't send password - resolve it
-      const { password, ...result } = response;
-      console.log(response);
 
-      return result;
+      return response;
     }
   }
 
