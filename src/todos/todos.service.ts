@@ -3,6 +3,7 @@ import { Todo } from './todo.entity';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/createTodo.dto';
+import { UpdateTodoDto } from './dto/updateTodo.dto';
 
 @Injectable()
 export class TodosServices {
@@ -24,7 +25,7 @@ export class TodosServices {
     return this.todoRepository.find();
   }
 
-  async update(id: number, dto: CreateTodoDto) {
+  async update(id: number, dto: UpdateTodoDto) {
     const todo = await this.todoRepository.findOne({ where: { id } });
 
     Object.assign(todo, dto);

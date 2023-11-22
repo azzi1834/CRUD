@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
+import { CreateUserDto } from './dto/createUser.dto';
 
 @Injectable()
 export class UserService {
@@ -10,7 +11,6 @@ export class UserService {
   ) {}
 
   async findUser(data: string | any) {
-    debugger;
     const user = await this.userRepository.findOne({
       where: { email: data.email },
     });
@@ -18,28 +18,18 @@ export class UserService {
     return user;
   }
 
-  async createUser(data) {
+  async createUser(data: CreateUserDto) {
     try {
       debugger;
-      const email = data.body.email;
       const alreadyUser = await this.userRepository.findOne({
-        where: { email: email },
+        where: { email: data.email },
       });
-      console.log(alreadyUser);
 
-      // resolve this - send proper response if user already exists
       if (alreadyUser) {
-        debugger;
-        console.log('User already exist', alreadyUser);
-        return {
-          error: 'User registration failed',
-          statusCode: 409,
-          message: 'User already exists',
-        };
+        throw new BadRequestException('User with this email is already exist!');
       }
 
-      //resolve this
-      const result = await this.userRepository.save(data.body);
+      const result = await this.userRepository.save(data);
 
       return result;
     } catch (err) {

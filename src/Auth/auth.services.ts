@@ -1,7 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { AuthRegisterDto } from './dto/authRegister.dto';
+import { AuthLoginDto } from './dto/authLogin.dto';
 
 @Injectable()
 export class AuthService {
@@ -21,18 +28,32 @@ export class AuthService {
     ) {
       const { ...result } = user;
       return result;
+    } else {
+      return null;
     }
-    return null;
   }
 
-  async login(user: any) {
+  async login(dto: AuthLoginDto) {
+    debugger;
+    const { email, password } = dto;
+
+    if (!email || !password) {
+      throw new BadRequestException('Please provide email and password!');
+    }
+
+    const user = await this.userService.findUser(email);
+
+    if (!user || !(await this.compareData(password, user.password))) {
+      throw new UnauthorizedException('Incorrect email or password');
+    }
+
     const payload = {
       user: {
-        id: user.user.id,
-        email: user.user.email,
-        name: user.user.name,
-        created_at: user.user.created_at,
-        updated_at: user.user.updated_at,
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        created_at: user.createdAt,
+        updated_at: user.updatedAt,
       },
     };
     return {
@@ -40,19 +61,25 @@ export class AuthService {
     };
   }
 
-  async register(data: any) {
-    data.body.password = await bcrypt.hash(data.body.password, 10);
+  async register(data: AuthRegisterDto) {
+    debugger;
+
+    data = { ...data, password: await bcrypt.hash(data.password, 10) };
 
     const response = await this.userService.createUser(data);
 
-    if (response) {
-      //don't send password - resolve it
-
-      return response;
-    }
+    return response;
   }
 
   decodeToken(token): any {
     return this.jwtService.decode(token);
+  }
+
+  public hashData(password: string) {
+    return bcrypt.hash(password, 10);
+  }
+
+  public compareData(attempt: string, password: string) {
+    return bcrypt.compare(attempt, password);
   }
 }

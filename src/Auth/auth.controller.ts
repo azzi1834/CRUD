@@ -6,33 +6,35 @@ import {
   UseGuards,
   Response,
   HttpStatus,
+  Body,
 } from '@nestjs/common';
 import { LocalAuthGuard } from './guard/localAuth.guard';
 import { AuthService } from './auth.services';
 import { JwtAuthGuard } from './guard/jwtAuth.guard';
+import { AuthRegisterDto } from './dto/authRegister.dto';
+import { AuthLoginDto } from './dto/authLogin.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  debugger;
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req) {
+  async login(@Body() dto: AuthLoginDto) {
     debugger;
 
-    const result = await this.authService.login(req);
+    const result = await this.authService.login(dto);
 
     return result;
   }
 
   @Post('register')
-  async register(@Request() req, @Response() res) {
-    // resolve - return proper error if it crashed
+  async register(@Response() res, @Body() dto: AuthRegisterDto) {
     try {
-      const result = await this.authService.register(req);
-
-      if (result.statusCode === 409) {
+      debugger;
+      const result = await this.authService.register(dto);
+      // return result;
+      if (result.status === 400) {
         return res
           .status(HttpStatus.CONFLICT)
 
@@ -44,10 +46,7 @@ export class AuthController {
         .json({ message: 'User Registered Successfull', result });
     } catch (error) {
       console.log(error);
-      return res
-        .status(HttpStatus.BAD_REQUEST)
-
-        .json({ message: `User registration error ${error}` });
+      return error;
     }
   }
 
