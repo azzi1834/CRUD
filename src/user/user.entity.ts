@@ -1,11 +1,12 @@
-// import { Column, CreatedAt, DataType, UpdatedAt } from 'sequelize-typescript';
-
+import { Todo } from 'src/todos/todo.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinTable,
+  OneToMany,
 } from 'typeorm';
 
 @Entity({ name: 'Users' })
@@ -27,6 +28,13 @@ export class User {
     type: 'varchar',
   })
   password: string;
+
+  @Column({ default: 0 })
+  recommendations: number;
+
+  @JoinTable()
+  @OneToMany(() => Todo, (todo) => todo.user)
+  todos: string[];
 
   @CreateDateColumn()
   createdAt: Date;

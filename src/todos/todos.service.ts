@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/createTodo.dto';
 import { UpdateTodoDto } from './dto/updateTodo.dto';
+import { PaginationQueryDto } from 'src/common/dto/paginationQuery.dto';
 
 @Injectable()
 export class TodosServices {
@@ -18,11 +19,16 @@ export class TodosServices {
   }
 
   findTodo(id: number) {
-    return this.todoRepository.findOne({ where: { id } });
+    return this.todoRepository.findOne({ where: { id }, relations: ['user'] });
   }
 
-  findAllTodos() {
-    return this.todoRepository.find();
+  findAllTodos(paginationQuery: PaginationQueryDto) {
+    const { limit, offset } = paginationQuery;
+    return this.todoRepository.find({
+      relations: ['user'],
+      skip: offset,
+      take: limit,
+    });
   }
 
   async update(id: number, dto: UpdateTodoDto) {

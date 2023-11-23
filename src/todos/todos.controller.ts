@@ -19,6 +19,7 @@ import { TodosServices } from './todos.service';
 import { CreateTodoDto } from './dto/createTodo.dto';
 import { JwtAuthGuard } from 'src/Auth/guard/jwtAuth.guard';
 import { UpdateTodoDto } from './dto/updateTodo.dto';
+import { PaginationQueryDto } from 'src/common/dto/paginationQuery.dto';
 
 @Controller('todos')
 export class TodosController {
@@ -66,8 +67,8 @@ export class TodosController {
   // }
 
   @Get()
-  findAllTodos() {
-    const todos = this.todoServices.findAllTodos();
+  findAllTodos(@Query() paginationQuery: PaginationQueryDto) {
+    const todos = this.todoServices.findAllTodos(paginationQuery);
 
     return todos;
   }
