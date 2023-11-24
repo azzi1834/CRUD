@@ -13,19 +13,23 @@ export class TodosServices {
   ) {}
 
   async create(dto: CreateTodoDto) {
+    debugger;
     const todo = this.todoRepository.create(dto);
 
     return await this.todoRepository.save(todo);
   }
 
   findTodo(id: number) {
-    return this.todoRepository.findOne({ where: { id }, relations: ['user'] });
+    return this.todoRepository.findOne({
+      where: { id },
+      // relations: ['user']
+    });
   }
 
   findAllTodos(paginationQuery: PaginationQueryDto) {
     const { limit, offset } = paginationQuery;
     return this.todoRepository.find({
-      relations: ['user'],
+      // relations: ['user'],
       skip: offset,
       take: limit,
     });

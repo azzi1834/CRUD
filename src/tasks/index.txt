@@ -7,3 +7,7 @@
 3. Authentication - incomplete 
 =========================
 Migrations 
+
+
+
+30 - completed 

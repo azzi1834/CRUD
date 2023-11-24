@@ -29,12 +29,12 @@ export class User {
   })
   password: string;
 
-  @Column({ default: 0 })
-  recommendations: number;
+  // @Column({ default: 0 })
+  // recommendations: number;
 
-  @JoinTable()
-  @OneToMany(() => Todo, (todo) => todo.user)
-  todos: string[];
+  // @JoinTable()
+  // @OneToMany(() => Todo, (todo) => todo.user)
+  // todos: string[];
 
   @CreateDateColumn()
   createdAt: Date;
