@@ -15,6 +15,9 @@ export class Todo {
   @Column()
   title: string;
 
+  @Column()
+  userId: number;
+
   // @JoinTable()
   // @ManyToOne(() => User, (user) => user.todos)
   // user: User;

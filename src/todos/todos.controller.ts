@@ -14,6 +14,7 @@ import {
   Query,
   HttpException,
   NotFoundException,
+  Req,
 } from '@nestjs/common';
 import { TodosServices } from './todos.service';
 import { CreateTodoDto } from './dto/createTodo.dto';
@@ -28,9 +29,15 @@ export class TodosController {
   @UseGuards(JwtAuthGuard)
   @Post('create')
   //  By using @Body() decorator use variable with decorator as @Body() body, and 'body' has all variables declared in body
-  create(@Body() dto: CreateTodoDto) {
+  create(@Body() dto: CreateTodoDto, @Req() req) {
     debugger;
-    return this.todoServices.create(dto);
+    console.log(req.user);
+
+    console.log(req.user.payload.user.id);
+
+    const userId = req.user.payload.user.id;
+
+    return this.todoServices.create(dto, userId);
   }
 
   // When its only specified variable is required, declared in decorator as @Body('name') or @Body('email')

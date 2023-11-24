@@ -12,9 +12,13 @@ export class TodosServices {
     @InjectRepository(Todo) private readonly todoRepository: Repository<Todo>,
   ) {}
 
-  async create(dto: CreateTodoDto) {
+  async create(dto: CreateTodoDto, userId: number) {
     debugger;
-    const todo = this.todoRepository.create(dto);
+    console.log(userId);
+
+    const todo = this.todoRepository.create({ ...dto, userId: userId });
+
+    console.log(todo);
 
     return await this.todoRepository.save(todo);
   }
