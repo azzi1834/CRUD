@@ -41,7 +41,7 @@ export class AuthService {
       throw new BadRequestException('Please provide email and password!');
     }
 
-    const user = await this.userService.findUser(email);
+    const user = await this.userService.findUser({ email: email });
 
     if (!user || !(await this.compareData(password, user.password))) {
       throw new UnauthorizedException('Incorrect email or password');
@@ -56,6 +56,7 @@ export class AuthService {
         updated_at: user.updatedAt,
       },
     };
+
     return {
       access_token: this.jwtService.sign(payload),
     };

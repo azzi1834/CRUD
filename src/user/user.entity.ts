@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   JoinTable,
   OneToMany,
+  ManyToMany,
 } from 'typeorm';
 
 @Entity({ name: 'Users' })
@@ -29,12 +30,26 @@ export class User {
   })
   password: string;
 
-  // @Column({ default: 0 })
-  // recommendations: number;
-
-  // @JoinTable()
   // @OneToMany(() => Todo, (todo) => todo.user)
-  // todos: string[];
+  // todos: Todo[];
+
+  // @ManyToMany(
+  //   () => Course,
+  //   (course) => course.users, //optional
+  //   { onDelete: 'NO ACTION', onUpdate: 'NO ACTION' },
+  // )
+  // @JoinTable({
+  //   name: 'student_course',
+  //   joinColumn: {
+  //     name: 'student_id',
+  //     referencedColumnName: 'id',
+  //   },
+  //   inverseJoinColumn: {
+  //     name: 'course_id',
+  //     referencedColumnName: 'id',
+  //   },
+  // })
+  // courses?: Course[];
 
   @CreateDateColumn()
   createdAt: Date;

@@ -14,6 +14,8 @@ export class UserService {
   ) {}
 
   async findUser(data: string | any) {
+    debugger;
+
     const user = await this.userRepository.findOne({
       where: { email: data.email },
     });

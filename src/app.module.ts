@@ -7,6 +7,7 @@ import { TodosModule } from './todos/todos.module';
 import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './Auth/auth.module';
+import { CourseModule } from './Courses/course.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthModule } from './Auth/auth.module';
     TodosModule,
     UserModule,
     AuthModule,
+    CourseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
