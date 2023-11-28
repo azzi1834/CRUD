@@ -7,10 +7,11 @@ import { AuthService } from 'src/Auth/auth.services';
 import { JwtService } from '@nestjs/jwt';
 import { Todo } from 'src/todos/todo.entity';
 import { Event } from 'src/events/entities/event.entity';
+import { UserController } from './user.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Todo, Event])],
-  // controllers: [UserController],
+  controllers: [UserController],
   providers: [UserService, AuthService, JwtService],
   exports: [TypeOrmModule, UserService],
 })

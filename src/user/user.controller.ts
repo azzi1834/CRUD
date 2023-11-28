@@ -1,25 +1,26 @@
-// import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
-// import { UserService } from './user.service';
-// import { CreateUserDto } from './dto/createUser.dto';
-// import { AuthService } from 'src/Auth/auth.services';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Res,
+} from '@nestjs/common';
+import { UserService } from './user.service';
 
-// @Controller('user')
-// export class UserController {
-//   constructor(private readonly authService: AuthService) {}
+@Controller('user')
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
-//   @Post()
-//   async createUser(@Body() dto: CreateUserDto, @Res() response) {
-//     try {
-//       const user = await this.authService.register(dto);
-
-//       return response
-//         .status(HttpStatus.CREATED)
-//         .json({ message: 'User created Successfully', User: user });
-//     } catch (error) {
-//       debugger;
-//       return response
-//         .status(error.status)
-//         .json({ message: 'User not created' });
-//     }
-//   }
-// }
+  @Get(':id')
+  async findUserDetails(@Param('id') id: number) {
+    try {
+      debugger;
+      const user = await this.userService.findUserDetails(id);
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}

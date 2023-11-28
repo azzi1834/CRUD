@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import { Connection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
 import { Todo } from 'src/todos/todo.entity';
 
@@ -10,13 +10,13 @@ export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Todo) private readonly todoRepository: Repository<Todo>,
-    private readonly connection: Connection,
   ) {}
 
   async findUser(data: string | any) {
     debugger;
 
     const user = await this.userRepository.findOne({
+      relations: ['todos'],
       where: { email: data.email },
     });
 
@@ -40,5 +40,16 @@ export class UserService {
     } catch (err) {
       return err;
     }
+  }
+
+  async findUserDetails(data: string | any) {
+    debugger;
+
+    const user = await this.userRepository.findOne({
+      relations: ['todos'],
+      where: { id: data.id },
+    });
+
+    return user;
   }
 }
