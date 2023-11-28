@@ -5,9 +5,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinTable,
   OneToMany,
-  ManyToMany,
 } from 'typeorm';
 
 @Entity({ name: 'Users' })
@@ -30,8 +28,8 @@ export class User {
   })
   password: string;
 
-  // @OneToMany(() => Todo, (todo) => todo.user)
-  // todos: Todo[];
+  @OneToMany(() => Todo, (todo) => todo.user)
+  todos: Todo;
 
   // @ManyToMany(
   //   () => Course,

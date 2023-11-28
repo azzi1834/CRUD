@@ -30,7 +30,7 @@ export class TodosServices {
   findAllTodos(paginationQuery: PaginationQueryDto) {
     const { limit, offset } = paginationQuery;
     return this.todoRepository.find({
-      // relations: ['user'],
+      relations: ['user'],
       skip: offset,
       take: limit,
     });
