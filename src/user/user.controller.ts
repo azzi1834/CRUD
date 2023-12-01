@@ -1,23 +1,26 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpStatus,
-  Param,
-  Post,
-  Res,
-} from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get(':id')
-  async findUserDetails(@Param('id') id: number) {
+  @Get('todos')
+  async findUserDetailsWithTodos() {
     try {
       debugger;
-      const user = await this.userService.findUserDetails(id);
+      const user = await this.userService.findUserDetailsWithTodos();
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Get('courses')
+  async findUserDetailsWithCourses() {
+    try {
+      debugger;
+      const user = await this.userService.findUserDetailsWithCourses();
       return user;
     } catch (error) {
       console.log(error);

@@ -27,5 +27,5 @@ export class AddUserIdToTodos1700818410083 implements MigrationInterface {
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(): Promise<void> {}
 }

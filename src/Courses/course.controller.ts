@@ -23,11 +23,8 @@ export class CourseController {
 
   @Post('createCourse')
   //  By using @Body() decorator use variable with decorator as @Body() body, and 'body' has all variables declared in body
-  create(@Body() dto: CreateCourseDto, @Req() req) {
+  createCourse(@Body() dto: CreateCourseDto, @Req() req) {
     debugger;
-    console.log(req.user);
-
-    console.log(req.user.payload.user.id);
 
     const userId = req.user.payload.user.id;
 
@@ -50,8 +47,8 @@ export class CourseController {
   //________First method
   //mention required parameters in @Param() decorator and then use in logic
   @Get(':id')
-  findOrder(@Param('id') id: number) {
-    const order = this.courseServices.findOrder(id);
+  findCourse(@Param('id') id: number) {
+    const order = this.courseServices.findCourse(id);
 
     return order;
   }
@@ -68,22 +65,22 @@ export class CourseController {
   // }
 
   @Get()
-  findAllOrders(@Query() paginationQuery: PaginationQueryDto) {
-    const orders = this.courseServices.findAllOrders(paginationQuery);
+  async findAllCourses() {
+    const courses = await this.courseServices.findAllCourses();
 
-    return orders;
+    return courses;
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() dto: UpdateCourseDto) {
-    return this.courseServices.update(id, dto);
+  updateCourse(@Param('id') id: number, @Body() dto: UpdateCourseDto) {
+    return this.courseServices.updateCourse(id, dto);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: number) {
+  async deleteCourse(@Param('id') id: number) {
     debugger;
 
-    const result = await this.courseServices.delete(id);
+    const result = await this.courseServices.deleteCourse(id);
 
     return result;
   }

@@ -28,5 +28,5 @@ export class AddUserIdToOrders1701068476873 implements MigrationInterface {
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(): Promise<void> {}
 }

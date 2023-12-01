@@ -42,12 +42,17 @@ export class UserService {
     }
   }
 
-  async findUserDetails(data: string | any) {
-    debugger;
-
-    const user = await this.userRepository.findOne({
+  async findUserDetailsWithTodos() {
+    const user = await this.userRepository.find({
       relations: ['todos'],
-      where: { id: data.id },
+    });
+
+    return user;
+  }
+
+  async findUserDetailsWithCourses() {
+    const user = await this.userRepository.find({
+      relations: ['courses'],
     });
 
     return user;

@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/user/user.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'Courses' })
 export class Course {
@@ -11,6 +19,6 @@ export class Course {
   @Column()
   courseMarks: number;
 
-  @Column()
-  userId: number;
+  @ManyToMany(() => User, (user) => user.courses)
+  users: User[];
 }

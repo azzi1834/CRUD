@@ -1,3 +1,4 @@
+import { Course } from 'src/Courses/course.entity';
 import { Todo } from 'src/todos/todo.entity';
 import {
   Entity,
@@ -6,6 +7,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity({ name: 'Users' })
@@ -31,23 +34,19 @@ export class User {
   @OneToMany(() => Todo, (todo) => todo.user)
   todos: Todo;
 
-  // @ManyToMany(
-  //   () => Course,
-  //   (course) => course.users, //optional
-  //   { onDelete: 'NO ACTION', onUpdate: 'NO ACTION' },
-  // )
-  // @JoinTable({
-  //   name: 'student_course',
-  //   joinColumn: {
-  //     name: 'student_id',
-  //     referencedColumnName: 'id',
-  //   },
-  //   inverseJoinColumn: {
-  //     name: 'course_id',
-  //     referencedColumnName: 'id',
-  //   },
-  // })
-  // courses?: Course[];
+  @ManyToMany(() => Course, (course) => course.users, { cascade: true })
+  @JoinTable({
+    name: 'users_courses',
+    joinColumn: {
+      name: 'user_Id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'course_Id',
+      referencedColumnName: 'id',
+    },
+  })
+  courses: Course[];
 
   @CreateDateColumn()
   createdAt: Date;
