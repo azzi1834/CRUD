@@ -21,12 +21,13 @@ import { CreateTodoDto } from './dto/createTodo.dto';
 import { JwtAuthGuard } from 'src/Auth/guard/jwtAuth.guard';
 import { UpdateTodoDto } from './dto/updateTodo.dto';
 import { PaginationQueryDto } from 'src/common/dto/paginationQuery.dto';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('todos')
+@UseGuards(JwtAuthGuard)
 export class TodosController {
   constructor(private readonly todoServices: TodosServices) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post('create')
   //  By using @Body() decorator use variable with decorator as @Body() body, and 'body' has all variables declared in body
   create(@Body() dto: CreateTodoDto, @Req() req) {
@@ -74,6 +75,7 @@ export class TodosController {
   //   return todos;
   // }
 
+  @Public()
   @Get()
   findAllTodos(@Query() paginationQuery: PaginationQueryDto) {
     const todos = this.todoServices.findAllTodos(paginationQuery);
@@ -81,13 +83,11 @@ export class TodosController {
     return todos;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put(':id')
   update(@Param('id') id: number, @Body() dto: UpdateTodoDto) {
     return this.todoServices.update(id, dto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(@Param('id') id: number) {
     debugger;

@@ -3,13 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
-import { Todo } from 'src/todos/todo.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @InjectRepository(Todo) private readonly todoRepository: Repository<Todo>,
   ) {}
 
   async findUser(data: string | any) {
